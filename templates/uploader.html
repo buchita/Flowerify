@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Uploader</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+{% load crispy_forms_tags %}
+
+<div class="container">
+    <h1>Flower</h1>
+    {#    <!-- List of uploaded documents -->#}
+    {#    {% if documents %}#}
+    {#        <ul>#}
+    {#            {% for document in documents %}#}
+    {#                <a href="{{ document.image }}"></a>#}
+    {#            {% endfor %}#}
+    {#        </ul>#}
+    {#    {% else %}#}
+    {#        <p>No documents.</p>#}
+    {#    {% endif %}#}
+    {##}
+
+    <div class="jumbotron">
+
+
+        {% block content %}
+            <form  method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="document">
+                    <button type="submit">Upload file</button>
+                </form>
+                {% if url %}
+                    <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+                {% endif %}
+
+            </form>
+
+        {% endblock %}
+
+
+
+        <!-- Upload form. Note enctype attribute! -->
+        {#    <form action="{% url 'uploader' %}" method="post" enctype="multipart/form-data">#}
+
+
+        {#        <form method="post" enctype="multipart/form-data">#}
+        {##}
+        {#            {% csrf_token %}#}
+        {#            <p>{{ form.non_field_errors }}</p>#}
+        {#            <p>{{ form.file.label_tag }} {{ form.file.help_text }}</p>#}
+        {#            <p>#}
+        {#                {{ form.docfile.errors }}#}
+        {#                {{ form.file }}#}
+        {#            </p>#}
+        {#            <p><input type="submit" value="Upload"/></p>#}
+        {#            <input src = '{{ img }}' type="text">#}
+        {##}
+        {#        </form>#}
+
+
+        {#        <form action="{% url "projectApp.views.upload_file" %}" method="POST" enctype="multipart/form-data">{% csrf_token %}#}
+        {#    <div class="file-field input-field left">#}
+        {#        <div class="btn black-text waves-effect waves-dark" style="background-color: #F5DF73">#}
+        {#            <div>Upload</div>#}
+        {#            <input type="file" name = "input_image" onchange="readURL(this);">#}
+        {#        </div>#}
+        {#    </div>#}
+        {#</form>#}
+        {#        <img src="{{ image }}" alt="this is image chosen">#}
+
+    </div>
+    {#    <form method="post" enctype="multipart/form-data">#}
+    {#        {% csrf_token %}#}
+    {#        {{ form|crispy }}#}
+    {#                {{ form.as_p }}#}
+    {##}
+    {#        <button type="submit">Upload Image</button>#}
+    {#    </form>#}
+</div>
+</body>
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    {% load static %} <!-- Prepare django to load static files -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    {#	<link rel="stylesheet" type="text/css" href="/static/index.css">#}
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}/">
+
+</head>
+<!-- for scrolling and the navbar is keeping track-->
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<div class="container">
+
+    <!--navbar, set the default navbar with fixed position at the top-->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- small button -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#mynavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Flowerify</a>
+
+            </div>
+            <!-- web browser-->
+            <div class="collapse navbar-collapse" id="mynavbar">
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home">HOME<span class="glyphicon glyphicon-grain"></span></a></li>
+                    <li><a href="#about">ABOUT<span class="glyphicon glyphicon-leaf"></span></a></li>
+                    <li><a href="{% url 'uploader' %}">FLOWER<span class="glyphicon glyphicon-ice-lolly-tasted"></span></a>
+                    </li>
+                    <li><a href="#contact">CONTACT<span class="glyphicon glyphicon-earphone"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+    <div class="container" id="home">
+
+        {#		<img alt="it is not working" id="pic" src="headerPic.jpg" width="100%">#}
+        <img id="HeaderPic" alt="Header" src={% static "header.jpg" %}>
+
+        <!-- name of the store-->
+        <div class="jumbotron" style="background-color: lavender">
+
+            <h1>Flowerify</h1>
+        </div>
+
+        <!-- about section starts-->
+        <div class="jumbotron" id="about" style="background-color: lavenderblush;">
+            <h2>
+                <mark>About</mark>
+
+            </h2>
+
+            {#            <p>Yo, {{ login }}#}
+            <br>
+            Flowerify is a web application that enables a user to input an image of a flower. The proposed system will
+            upload, process and analyse the image and output the name and general care information for the identified
+            flower with reference to a known database. The preprocessing and classification task will be undertaken
+            using python Keras. The proposed app will also aid in the maintenance and upkeep of the flower such as when
+            and where to plant this flower; possible pests and diseases. The aim of the app ‘Flowerify’ is to help users
+            to detect, recognise and understand flowers. The author plans to accomplish this by providing a platform for
+            users to upload, process and analyse the flower image.
+
+            The recommender system will also be implemented in this application for recommending similar flowers to the
+            user input flower.
+
+            For Flowerify to be an intuitive web app beneficial to users from all backgrounds, the further objectives of
+            the project are to create a visually appealing and effective user interface.
+            </p>
+
+
+        </div>
+        <br>
+    </div>
+
+    <div class="container-fluid" id="flower">
+
+
+        <h2>
+            <mark>Flower</mark>
+        </h2>
+        <!-- start the menu. no style for the list-->
+        <ul class="list-unstyled" id="myList">
+            <div class="row text-center">
+
+                <!-- set the menu to be half ie 6-->
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_1.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_1.flowerName }}<span class="badge badge-pill badge-danger"
+                                                                                   style="background-color: red;">HOT</span>
+                                </h3>
+
+                                {#								<p class="card-text">Information about flower</p>#}
+
+                                <a target="_self" href="{% url 'daisyInformation' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <!-- 2 -->
+                <!-- set the menu to be half ie 6-->
+                {#                <div class="col-sm-6" style="background-color: #F1CE71;">#}
+                <div class="col-sm-6">
+
+                    <!-- declare card -->
+                    <div class="card sm-6 box-shadow">
+
+                        <!-- img at the top of the card-->
+                        <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_2.image }}" width="50px">
+
+                        <!-- start the card body-->
+                        <div class="card-body">
+
+                            <h3 class="card-title">{{ key_2.flowerName }}</h3>
+
+                            {#								<p class="card-text">View</p>#}
+
+
+                            <a target="_self" href="{% url 'blanketflower' %}" class="btn btn-light"
+                               role="button" style="background-color: orange;">View</a>
+                            <br>
+                            <br>
+
+                        </div><!-- end card body-->
+                    </div><!-- end card-->
+
+
+                </div>
+
+                <!-- set the menu to be half ie 6-->
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_3.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_3.flowerName }}</h3>
+
+                                {#								<p class="card-text">Information about flower</p>#}
+
+                                <a target="_self" href="{% url 'buttercup' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_4.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_4.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'carnation' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_5.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_5.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'buttercup' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_6.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_6.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'cornpoppy' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_7.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_7.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'lotus' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_8.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_8.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'marigold' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_9.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_9.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'sunflower' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+                                <li>
+                    {#                    <div class="col-sm-6" style="background-color: #D8C0F1;">#}
+                    <div class="col-sm-6">
+
+                        <!-- declare card -->
+                        <div class="card sm-6 box-shadow">
+                            <!-- img at the top of the card-->
+                            <img class="card-imag-top" src="data:image/jpeg;base64,{{ key_10.image }}" width="50px">
+
+                            <!-- start the card body-->
+                            <div class="card-body">
+
+                                <h3 class="card-title">{{ key_10.flowerName }}</h3>
+
+                                <a target="_self" href="{% url 'rose' %}" class="btn btn-light"
+                                   role="button" style="background-color: orange;">View</a>
+
+                                <br>
+                                <br>
+
+
+                            </div><!-- end card body-->
+                        </div><!-- end card-->
+                    </div>
+                </li><!-- end half -->
+
+
+
+            </div>
+        </ul>
+
+    </div>
+</div>
+</body>
+</html>
