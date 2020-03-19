@@ -1,0 +1,37 @@
+from django.db import models
+
+class Flower(models.Model):
+    # id = models.CharField(max_length=3)
+    # description = models.CharField(max_length=100)
+    description = models.CharField(max_length=2000, default='please add description')
+    name = models.CharField(max_length=100)
+    id = models.IntegerField(primary_key=True)
+
+
+    # blob
+    image = models.TextField(null=True)
+
+
+
+    class Meta:
+        db_table = "flower"
+
+    def __str__(self):
+        #return self.description
+
+        return self.id
+
+
+
+# # file uploader
+# class ImageModel(models.Model):
+#     location = models.CharField(max_length=20)
+#     file = models.ImageField(upload_to='images/%Y/%m/%d')
+#
+#     # id = models.CharField(max_length=11, primary_key=True)
+#     #
+#     class Meta:
+#         db_table = "prediction"
+#
+#     def __str__(self):
+#         return self.location
