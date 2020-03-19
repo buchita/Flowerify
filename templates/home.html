@@ -7,9 +7,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    {#	<link rel="stylesheet" type="text/css" href="/static/index.css">#}
-    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}/">
-
+    <link type="text/css" href="{% static 'index.css' %}/">
 </head>
 <!-- for scrolling and the navbar is keeping track-->
 <body data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -37,8 +35,6 @@
                     <li><a href="{% url 'uploader' %}">FLOWER<span class="glyphicon glyphicon-ice-lolly-tasted"></span></a>
                     </li>
                     <li><a href="#contact">CONTACT<span class="glyphicon glyphicon-earphone"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span></a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
 
 
@@ -57,7 +53,7 @@
     <div class="container" id="home">
 
         {#		<img alt="it is not working" id="pic" src="headerPic.jpg" width="100%">#}
-        <img id="HeaderPic" alt="Header" src={% static "header.jpg" %}>
+        <img id="HeaderPic" alt="Header" src={% static "header.jpg" %} width="100%">
 
         <!-- name of the store-->
         <div class="jumbotron" style="background-color: lavender">
@@ -72,7 +68,6 @@
 
             </h2>
 
-            {#            <p>Yo, {{ login }}#}
             <br>
             Flowerify is a web application that enables a user to input an image of a flower. The proposed system will
             upload, process and analyse the image and output the name and general care information for the identified
@@ -94,7 +89,7 @@
         <br>
     </div>
 
-    <div class="container-fluid" id="flower">
+    <div class="container-fluid" id="flower" style="background-color: #E0E9E0;">
 
 
         <h2>
@@ -237,7 +232,7 @@
 
                                 <h3 class="card-title">{{ key_5.flowerName }}</h3>
 
-                                <a target="_self" href="{% url 'buttercup' %}" class="btn btn-light"
+                                <a target="_self" href="{% url 'dandelion' %}" class="btn btn-light"
                                    role="button" style="background-color: orange;">View</a>
 
                                 <br>
