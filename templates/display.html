@@ -3,8 +3,9 @@
 
 {% block content %}
     <div class="jumbotron">
-        <h1>Display</h1>
-             <img src="data:image/jpeg;base64,{{ image }}" class="responsive">
+        <h1>Search</h1>
+        {% if name %}
+            <img src="data:image/jpeg;base64,{{ image }}" class="responsive">
             <h2><b>Name: </b></h2>
             <p>{{ name }}</p>
 
@@ -22,13 +23,13 @@
 
             <h2><b>Facts: </b></h2>
             <p>{{ tips }}</p>
+            {% else %}
+            {{ error }}
+
+        {% endif %}
 
 
-            {#if there is no return#}
-{#            {% empty %}#}
-{#                <p>No match</p>#}
-{#        {% endfor %}#}
-{##}
+
 
     </div>
 
