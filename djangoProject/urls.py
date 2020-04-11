@@ -19,9 +19,10 @@ from projectApp import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # add in the rest of the urls to link views with template
     path('', include('projectApp.urls')),
     path("flower/daisy/", views.DaisyInformation, name="daisyInformation"),
     path("flower/blanketFlower/", views.BlanketFlower, name="blanketflower"),
@@ -34,8 +35,12 @@ urlpatterns = [
     path("flower/sunflower/", views.Sunflower, name="sunflower"),
     path("flower/rose/", views.Rose, name="rose"),
     path('flower/upload/', views.upload_file, name="uploader"),
+    path('filter/', views.keyword_filter, name="display"),
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
