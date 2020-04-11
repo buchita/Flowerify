@@ -2,9 +2,7 @@
 
 import imquality.brisque as brisque
 import PIL.Image
-# from pathlib import Path
 import cv2
-# from django.core.files.storage import FileSystemStorage
 import base64
 import numpy as np
 from PIL import Image
