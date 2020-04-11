@@ -26,23 +26,16 @@ def filter(image_path):
 
     color_thief = ColorThief(path)
     palette = color_thief.get_palette(color_count=6)
-
+    
+    # get the lowest value -> black background
     min_value = min(palette)
     result = []
     for i in palette:
         if i > min_value:
             result.append(i)
-
-    # print(result)
-    print(result[0])
-
+     
+    # dominant colour 
     dominant  = result[0]
-    # filename = "dominant_colour.txt"
-    # file = open(filename,"r")
-    # for line in file:
-    #    print(type(line))
-
-
     dominant1 = dominant
     dominant2 = dominant
     dominant_add_5 = list(dominant1)
@@ -85,5 +78,4 @@ def filter(image_path):
     for i in tag_name:
         tag_int.append(int(i))
 
-    print(tag_int)
     return tag_int
