@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+        <div class="jumbotron">
+
+
+            <img src="data:image/jpeg;base64,{{ image }}" class="responsive">
+            <h2><b>Name: </b></h2>
+            <p>{{ name }}</p>
+
+            <h2><b>Description: </b></h2>
+            <p>{{ description }}</p>
+
+            <h2><b>Meaning: </b></h2>
+            <p>{{ meaning }}</p>
+
+            <h2><b>Care Information: </b></h2>
+            <p> {{ care_information }}</p>
+
+            <h2><b>Planting: </b></h2>
+            <p> {{ planting }}</p>
+
+            <h2><b>Facts: </b></h2>
+            <p>{{ tips }}</p>
+
+        </div>
+
+
+{% endblock %}
