@@ -1,20 +1,16 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect
-
 from projectApp.models import Flower, TrainModel
-
-# from .form import DocumentForm
+from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from projectApp.machineLearning.image_quality_assessment import image_quality, stringToRGB
-from djangoProject import settings
 import base64
 from projectApp.machineLearning.random_forest import classifier
 from projectApp.machineLearning.dataset_filter import filter
 
-
+# fetch image and text for each flower
 def home(request):
+    # instantiate the flower
     obj1 = Flower.objects.get(id=1)
-    # obj = Flower.objects.all()
+    # convert from blob to string
     image_data1 = base64.b64encode(obj1.image).decode()
 
     data1 = {
@@ -98,7 +94,7 @@ def home(request):
         'image': image_data10
     }
 
-
+    # populate the key to be used in html
     data_array = [data1, data2, data3, data4, data5, data6, data7, data8, data9, data10]
     data_dict = {}
     index = 1
@@ -113,38 +109,39 @@ def home(request):
 
 # https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/
 def upload_file(request):
-   # filtered = {}
     context = {}
-    # when submitted
+
+
     extension =".jpg"
 
+    # when submitted
     if request.method == 'POST':
 
         # if file is selected
         if len(request.FILES) != 0:
             uploaded_file = request.FILES['document']
 
-              # check if the file ends with jpg
+            # check if the file ends with jpg
             if str(uploaded_file).endswith(extension):
-                print("this ends with jpg")
 
                 # declare file storage
                 fs = FileSystemStorage()
+
                 # save the file into the default location which is MEDIA_ROOT
                 # path of MEDIA_ROOT is declared in setting.py
                 name = fs.save(uploaded_file.name, uploaded_file)
                 url = fs.url(name)
 
-
-                print(url)
-
+                # filter the RGB values
                 tag_name = filter(url)
+                # check quality of the image
                 result = image_quality(url)
+
                 base64_im_ar = []
                 dataset_target = []
                 dataset_numpy = []
 
-                 # if list of matched RGB is empty
+                # if list of matched RGB is empty
                 if not tag_name:
                     print("not statement, empty")
                     for i in TrainModel.objects.all():
@@ -195,17 +192,17 @@ def upload_file(request):
 
         # if file is not selected
         else:
-            print("no file selecteddddd+++++++++++++++++++++++++++")
             no_file = "No image is selected. Please select an image"
             context = {'no_file': no_file}
 
     return render(request, 'uploader.html', context)
 
 
-
+# search the db
 def keyword_filter(request):
     if request.method == "GET":
         try:
+            # get keyword from html
             keyword = request.GET.get('searchkeyword')
             keyword = keyword.lower()
 
@@ -225,7 +222,7 @@ def keyword_filter(request):
                 }
 
         except Flower.DoesNotExist:
-            filtered = "this doesnt exist"
+            filtered = { 'error':  'this doesnt exist'}
 
     return render(request, 'display.html', filtered)
 
