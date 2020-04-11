@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 
-from projectApp.models import Flower
+from projectApp.models import Flower, TrainModel
 
 # from .form import DocumentForm
 from django.core.files.storage import FileSystemStorage
-# from projectApp.MachineLearning.image_quality_assessment import image_quality
+from projectApp.machineLearning.image_quality_assessment import image_quality, stringToRGB
 from djangoProject import settings
 import base64
+from projectApp.machineLearning.random_forest import classifier
+from projectApp.machineLearning.dataset_filter import filter
 
 
 def home(request):
@@ -111,61 +113,149 @@ def home(request):
 
 # https://docs.djangoproject.com/en/3.0/topics/http/file-uploads/
 def upload_file(request):
-    # using form and model
-    # if request.method == 'POST':
-    #     form = DocumentForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         form.save()
-    #         return redirect('display/')
-    # else:
-    #     # if its a get method
-    #     # empty form to b filled in
-    #     form = DocumentForm()
-    # return render(request, 'uploader.html', {
-    #     'form': form
-    # })
-    # basic file upload
-
-
+   # filtered = {}
     context = {}
     # when submitted
+    extension =".jpg"
+
     if request.method == 'POST':
-        uploaded_file = request.FILES['document']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        context['url'] = fs.url(name)
-        print(context['url'])
-        # image_quality(context['url'])
+
+        # if file is selected
+        if len(request.FILES) != 0:
+            uploaded_file = request.FILES['document']
+
+              # check if the file ends with jpg
+            if str(uploaded_file).endswith(extension):
+                print("this ends with jpg")
+
+                # declare file storage
+                fs = FileSystemStorage()
+                # save the file into the default location which is MEDIA_ROOT
+                # path of MEDIA_ROOT is declared in setting.py
+                name = fs.save(uploaded_file.name, uploaded_file)
+                url = fs.url(name)
+
+
+                print(url)
+
+                tag_name = filter(url)
+                result = image_quality(url)
+                base64_im_ar = []
+                dataset_target = []
+                dataset_numpy = []
+
+                 # if list of matched RGB is empty
+                if not tag_name:
+                    print("not statement, empty")
+                    for i in TrainModel.objects.all():
+                        image_data = ""
+                        image_data = base64.b64encode(i.image_dataset).decode()
+                        base64_im_ar.append(image_data)
+
+                        # convert from base 64 to numpy
+                        numpy_arr_image = stringToRGB(image_data)
+                        dataset_target.append(i.id)
+                        dataset_numpy.append(numpy_arr_image)
+                # if there is some matching from RGB
+                else:
+                    for i in TrainModel.objects.all():
+                        for j in tag_name:
+                            if i.id == j:
+
+                                print(i.image_id)
+                                image_data = ""
+                                image_data = base64.b64encode(i.image_dataset).decode()
+                                base64_im_ar.append(image_data)
+
+                                # convert from base 64 to numpy
+                                numpy_arr_image = stringToRGB(image_data)
+                                dataset_target.append(i.id)
+                                dataset_numpy.append(numpy_arr_image)
+
+                predict_result, percent, name = classifier(url, dataset_target, dataset_numpy)
+
+                #get information about the flower
+                for i in Flower.objects.all().filter(name=name):
+
+                    description = i.description,
+                    planting = i.planting,
+                    meaning =  i.meaning,
+                    care_information = i.care_information,
+                    disease = i.disease,
+                    tips = i.tips
+
+                context = { 'url': url, 'result': result, 'predict_result': predict_result, 'percent': percent, 'name': name,
+                'description': description, 'planting': planting, 'planting': planting,
+                'care_information': care_information, 'disease': disease,
+                'tips': tips, 'meaning': meaning}
+
+            else:
+                error_text = "Only jpg extension is accepted"
+                context = {'error_text': error_text}
+
+        # if file is not selected
+        else:
+            print("no file selecteddddd+++++++++++++++++++++++++++")
+            no_file = "No image is selected. Please select an image"
+            context = {'no_file': no_file}
+
     return render(request, 'uploader.html', context)
 
 
-# def display(request):
-#     # files = ImageModel.objects.all()
-#     obj = ImageModel.objects.get(id=8)
-#     img = base64.b64encode(obj.file).decode()
-#     data = {
-#         'location': obj.location,
-#         'file': img
-#     }
-#     return render(request, 'display.html', data)
-#
+
+def keyword_filter(request):
+    if request.method == "GET":
+        try:
+            keyword = request.GET.get('searchkeyword')
+            keyword = keyword.lower()
+
+            # search for keyword
+            for i in Flower.objects.all().filter(name=keyword):
+                image_data = base64.b64encode(i.image).decode()
+
+                filtered = {
+                    'description': i.description,
+                    'name': i.name,
+                    'image': image_data,
+                    'planting': i.planting,
+                    'meaning': i.meaning,
+                    'care_information': i.care_information,
+                    'disease': i.disease,
+                    'tips': i.tips
+                }
+
+        except Flower.DoesNotExist:
+            filtered = "this doesnt exist"
+
+    return render(request, 'display.html', filtered)
 
 
+
+# https: // stackoverflow.com / questions / 56138525 / how - to - show - a - blob - image - on - html - page - in -django
 # this is the beginning of the reading flower from the database
+
+
+# To retrieve the information about specific flower
 def DaisyInformation(request):
-    # return HttpResponse(index_home)
-    # https: // stackoverflow.com / questions / 56138525 / how - to - show - a - blob - image - on - html - page - in -django
     obj = Flower.objects.get(id=1)
-    # obj = Flower.objects.all()
+    # The image is stored as longblob in the database.
+    # In order to display the image in html, it needs to be decoded to base 64
     image_data = base64.b64encode(obj.image).decode()
 
+    # create a dictionary to store the information
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
-    # flowers = Flower.objects.all()
-    return render(request, 'daisyInformation.html', data)
+
+    # pass the data to daisyinformation page.
+    return render(request, 'flower_info_display.html', data)
 
 
 def BlanketFlower(request):
@@ -178,10 +268,15 @@ def BlanketFlower(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'blanketFlower.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Buttercup(request):
@@ -192,10 +287,15 @@ def Buttercup(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'buttercup.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 
@@ -207,10 +307,15 @@ def Carnation(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'carnation.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Dandelion(request):
@@ -221,10 +326,15 @@ def Dandelion(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'carnation.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def CornPoppy(request):
@@ -235,10 +345,15 @@ def CornPoppy(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'carnation.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Lotus(request):
@@ -249,10 +364,15 @@ def Lotus(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'lotus.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Marigold(request):
@@ -263,10 +383,15 @@ def Marigold(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'marigold.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Sunflower(request):
@@ -277,10 +402,15 @@ def Sunflower(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'sunflower.html', data)
+    return render(request, 'flower_info_display.html', data)
 
 
 def Rose(request):
@@ -291,7 +421,12 @@ def Rose(request):
     data = {
         'description': obj.description,
         'name': obj.name,
-        'image': image_data
+        'image': image_data,
+        'planting': obj.planting,
+        'meaning': obj.meaning,
+        'care_information': obj.care_information,
+        'disease': obj.disease,
+        'tips': obj.tips
     }
     # flowers = Flower.objects.all()
-    return render(request, 'rose.html', data)
+    return render(request, 'flower_info_display.html', data)
