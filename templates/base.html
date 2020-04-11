@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Flowerify</title>
+    {% load static %} <!-- Prepare django to load static files -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico'%}"/>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}">
+
+</head>
+
+<!-- for scrolling and the navbar is keeping track-->
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<div class="container">
+
+    <!--navbar, set the default navbar with fixed position at the top-->
+
+    <nav class="navbar fixed-top navbar-expand-lg navbar-light ">
+        <a class="navbar-brand" href="{% url 'home' %}">Flowerify<span><ion-icon name="leaf-outline"></ion-icon></span></a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynavbar"
+                aria-controls="mynavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="mynavbar">
+
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Home<span><ion-icon
+                            name="home-outline"></ion-icon></span></a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'uploader' %}">Flower<span><ion-icon
+                            name="flower-outline"></ion-icon></span></a>
+                </li>
+                <li id="searchicon">
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <form action="{% url 'display' %}" method="get" enctype="multipart/form-data">
+
+                            <input name="searchkeyword" class="form-control mr-sm-2" type="text" placeholder="Search"
+                                   aria-label="Search" required>
+
+                        </form>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </nav>
+
+
+</div>
+<div class="container">
+    <div class="card">
+        <img class="card-img-top" id="HeaderPic" alt="Header" src={% static "header.jpg" %}>
+
+        <div class="card-body">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+</div>
+
+{#for icons#}
+<script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+</body>
+</html>
