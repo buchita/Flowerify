@@ -20,12 +20,9 @@ flower_tag = {1: daisy, 2: blanketflower, 3: buttercup, 4: carnation, 5: dandeli
           8: marigold, 9: rose, 10: sunflower}
 
 
-def filer(image_path):
-    begin = cv2.os.getcwd()
-    image_root = begin.replace("\\", "/")
-
-    path = image_root + image_path
-    # input = r"C:\Users\buchi\OneDrive - Technological University Dublin\DT211c4\Dissertation\Dataset\sunflower\a13.jpg"
+def filter(image_path):
+    root = "djangoProject"
+    path = root + image_path
 
     color_thief = ColorThief(path)
     palette = color_thief.get_palette(color_count=6)
