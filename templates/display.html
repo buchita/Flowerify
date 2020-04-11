@@ -1,34 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
 
-    <meta charset="UTF-8">
-    <title>Display</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-</head>
-<body>
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Displayyyy</h1>
-            <p>Uploaded file: <a href="{{ url }}">{{ url }}</a></p>
+{% block content %}
+    <div class="jumbotron">
+        <h1>Display</h1>
+             <img src="data:image/jpeg;base64,{{ image }}" class="responsive">
+            <h2><b>Name: </b></h2>
+            <p>{{ name }}</p>
 
-        </div>
+            <h2><b>Description: </b></h2>
+            <p>{{ description }}</p>
+
+            <h2><b>Meaning: </b></h2>
+            <p>{{ meaning }}</p>
+
+            <h2><b>Care Information: </b></h2>
+            <p> {{ care_information }}</p>
+
+            <h2><b>Planting: </b></h2>
+            <p> {{ planting }}</p>
+
+            <h2><b>Facts: </b></h2>
+            <p>{{ tips }}</p>
+
+
+            {#if there is no return#}
+{#            {% empty %}#}
+{#                <p>No match</p>#}
+{#        {% endfor %}#}
+{##}
 
     </div>
 
 
-</body>
-</html>
 
-{#        {%  for flower in flowers %}#}
-{#            <h1>{{ flower.flowerName }}</h1>#}
-{##}
-{#            <img alt="it wont displayyyyyyyyy" src="{{ flower.img }}">#}
-{##}
-{#            <p>{{ flower.caption }}</p>#}
-{#        {% endfor %}#}
-
-
-{#<img src="media/images/{{ form.file }} " alt="what is this">#}
-
+{% endblock %}
