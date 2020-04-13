@@ -1,0 +1,94 @@
+
+/*
+    author : Buchita Gitchamnan
+*/
+
+body
+{
+    height: 100%;
+    font-family: "Courier New", serif;
+
+
+}
+mark
+{
+    background-color: #D6D628;
+}
+.navbar
+{
+    /*set the background colour pink*/
+    background-color: #89AE89;
+    margin-bottom: 0;
+    border: 0;
+    font-size: 14px !important;
+    letter-spacing: 4px;
+
+
+
+}
+.navbar li a, .navbar .navbar-brand
+{
+    /*change colour of the text*/
+    color: #fff !important;
+}
+
+
+.navbar-nav li a:hover, .navbar-nav li.active a
+{
+    /*hovering = letters change to green*/
+    color: #89AE89 !important;
+    /*when hovering over  background turns white*/
+    background-color: #fff !important;
+}
+
+
+.navbar-default .navbar-toggle
+{
+    border-color: transparent;
+    color: #fff !important;
+}
+
+
+
+
+.jum-menu
+{
+    background-color: lavender;
+}
+
+#pic{
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+#HeaderPic
+{
+    width: 100%;
+    height: 100%;
+}
+.row
+{
+    text-align: center;
+}
+.card
+{
+    border: none;
+}
+.card-img-top
+{
+    width: 50%;
+    height: 50%;
+
+}
+.responsive {
+  max-width: 100%;
+  height: auto;
+}
+.input-group.md-form.form-sm.form-2 input {
+  border: 1px solid #bdbdbd;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+}
+.input-group.md-form.form-sm.form-2 input.amber-border {
+  border: 1px solid #ffca28;
+}
