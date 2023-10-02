@@ -1,34 +1,28 @@
 
 /*
     author : Buchita Gitchamnan
+    Assignment topic : IceCream
 */
 
 body
 {
     height: 100%;
-    font-family: "Courier New", serif;
-
+    font-family: "Courier New";
 
 }
 mark
 {
     background-color: #D6D628;
 }
-.jumbotron
-{
-    background-color: #D7E8DB !important;
-}
 
 .navbar
 {
     /*set the background colour pink*/
-    background-color: #89AE89;
+    background-color: pink;
     margin-bottom: 0;
     border: 0;
     font-size: 14px !important;
     letter-spacing: 4px;
-
-
 
 }
 .navbar li a, .navbar .navbar-brand
@@ -40,8 +34,8 @@ mark
 
 .navbar-nav li a:hover, .navbar-nav li.active a
 {
-    /*hovering = letters change to green*/
-    color: #89AE89 !important;
+    /*hovering = letters change to pink*/
+    color: pink !important;
     /*when hovering over  background turns white*/
     background-color: #fff !important;
 }
@@ -52,8 +46,6 @@ mark
     border-color: transparent;
     color: #fff !important;
 }
-
-
 
 
 .jum-menu
@@ -71,29 +63,10 @@ mark
     width: 100%;
     height: 100%;
 }
-.row
-{
-    text-align: center;
-}
-.card
-{
-    border: none;
-}
-.card-img-top
+
+.card-imag-top
 {
     width: 50%;
     height: 50%;
 
-}
-.responsive {
-  max-width: 100%;
-  height: auto;
-}
-.input-group.md-form.form-sm.form-2 input {
-  border: 1px solid #bdbdbd;
-  border-top-left-radius: 0.25rem;
-  border-bottom-left-radius: 0.25rem;
-}
-.input-group.md-form.form-sm.form-2 input.amber-border {
-  border: 1px solid #ffca28;
 }
