@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Registration</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+
+<form method="post" class="post-form" action="/UserFormView/">
+{#  <label for="fname">First name:</label><br>#}
+{#  <input type="text" id="fname" name="fname" value="John"><br>#}
+{#  <label for="lname">Last name:</label><br>#}
+{#  <input type="text" id="lname" name="lname" value="Doe"><br><br>#}
+{#  <input type="submit" value="Submit">#}
+    <div class="container">
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">information</label>
+            <div class="col-sm-4">
+{#                in the model.py#}
+                {{ form.description }}
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">submit</button>
+    </div>
+
+</form>
+</body>
+</html>

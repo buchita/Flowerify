@@ -1,38 +1,23 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>read data</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-
-{% block content %}
+</head>
+<body>
+ <div class="container">
     <div class="jumbotron">
-        <h1>Search</h1>
-        {% if name %}
-            <img src="data:image/jpeg;base64,{{ image }}" class="responsive">
-            <h2><b>Name: </b></h2>
-            <p>{{ name }}</p>
+        {%  for flower in flowers %}
+            <h1>{{ flower.flowerName }}</h1>
 
-            <h2><b>Description: </b></h2>
-            <p>{{ description }}</p>
+            <img alt="it wont displayyyyyyyyy" src="{{ flower.img }}">
 
-            <h2><b>Meaning: </b></h2>
-            <p>{{ meaning }}</p>
-
-            <h2><b>Care Information: </b></h2>
-            <p> {{ care_information }}</p>
-
-            <h2><b>Planting: </b></h2>
-            <p> {{ planting }}</p>
-
-            <h2><b>Facts: </b></h2>
-            <p>{{ tips }}</p>
-            {% else %}
-            {{ error }}
-
-        {% endif %}
-
-
-
-
+            <p>{{ flower.caption }}</p>
+        {% endfor %}
     </div>
+ </div>
 
-
-
-{% endblock %}
+</body>
+</html>
