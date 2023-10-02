@@ -14,6 +14,11 @@ mark
 {
     background-color: #D6D628;
 }
+.jumbotron
+{
+    background-color: #D7E8DB !important;
+}
+
 .navbar
 {
     /*set the background colour pink*/
