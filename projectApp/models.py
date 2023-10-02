@@ -1,30 +1,21 @@
 from django.db import models
+# from django.db import ModelForm, Textarea
+
 
 class Flower(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=2000, default='please add description')
-    meaning = models.CharField(max_length=2000, default='please add meaning')
-    care_information = models.CharField(max_length=1000, default='please add care information')
-    planting = models.CharField(max_length=1000, default='please add planting')
-    disease = models.CharField(max_length=2000, default='please add disease')
-    image = models.TextField(null=True)    # blob
-    tips = models.CharField(max_length=1000, default='please add facts')
+    # id = models.CharField(max_length=3)
+    # description = models.CharField(max_length=100)
+    caption = models.CharField(max_length=100, default='')
+    flowerName = models.CharField(max_length=100)
+    # id = models.IntegerField(default=0)
+    img = models.ImageField(upload_to='images/', default='')
+    # def __init__(self):
+    #     return self.description
 
     class Meta:
-        db_table = "flower"
+        db_table = "image"
 
     def __str__(self):
-        return self.name
+        #return self.description
 
-
-class TrainModel(models.Model):
-    image_id = models.IntegerField(primary_key=True)
-    image_dataset = models.TextField(null=True)    # blob
-    id = models.IntegerField()
-
-    class Meta:
-        db_table = "flower_dataset"
-
-    def __str__(self):
-        return self.image_dataset
+        return self.flowerName
