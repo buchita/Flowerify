@@ -1,28 +1,35 @@
 # https://pypi.org/project/image-quality/
+import io
 
 import imquality.brisque as brisque
 import PIL.Image
+from pathlib import Path
+from PIL import Image
 import cv2
+from django.core.files.storage import FileSystemStorage
+import pickle
 import base64
 import numpy as np
-from PIL import Image
-import io
-
-
 
 def image_quality(image_path):
+    # path = r"C:\DIT\FYP\102flowers\sample-low-quality\blurry.jpg"
+    begin = cv2.os.getcwd()
+    image_root = begin.replace("\\", "/")
 
-    # path for reading
-    root = "djangoProject"
-    path = root + image_path
+    path = image_root + image_path
 
     image = PIL.Image.open(path)
+    # image.show()
     result = brisque.score(image)
 
-    #THE MEAN VALUE NEEDED TO B ASSIGNED
+    # print(result)
+    # print("this is the path")
+    # print(type(path))
+    # print(path)
     # lower the number  = less pixelated
     # however, the blurry images do not work in this
     return result
+
 
 
 # Take in base64 string and return cv image

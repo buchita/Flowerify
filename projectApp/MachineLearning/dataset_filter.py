@@ -20,22 +20,32 @@ flower_tag = {1: daisy, 2: blanketflower, 3: buttercup, 4: carnation, 5: dandeli
           8: marigold, 9: rose, 10: sunflower}
 
 
-def filter(image_path):
-    root = "djangoProject"
-    path = root + image_path
+def filer(image_path):
+    begin = cv2.os.getcwd()
+    image_root = begin.replace("\\", "/")
+
+    path = image_root + image_path
+    # input = r"C:\Users\buchi\OneDrive - Technological University Dublin\DT211c4\Dissertation\Dataset\sunflower\a13.jpg"
 
     color_thief = ColorThief(path)
     palette = color_thief.get_palette(color_count=6)
-    
-    # get the lowest value -> black background
+
     min_value = min(palette)
     result = []
     for i in palette:
         if i > min_value:
             result.append(i)
-     
-    # dominant colour 
+
+    # print(result)
+    print(result[0])
+
     dominant  = result[0]
+    # filename = "dominant_colour.txt"
+    # file = open(filename,"r")
+    # for line in file:
+    #    print(type(line))
+
+
     dominant1 = dominant
     dominant2 = dominant
     dominant_add_5 = list(dominant1)
@@ -78,4 +88,5 @@ def filter(image_path):
     for i in tag_name:
         tag_int.append(int(i))
 
+    print(tag_int)
     return tag_int
